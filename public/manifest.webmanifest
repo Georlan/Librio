@@ -1,0 +1,9 @@
+{
+  "name": "Librio",
+  "short_name": "Librio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f1e8",
+  "theme_color": "#101815",
+  "description": "Descubra livros disponíveis na sua comunidade."
+}
