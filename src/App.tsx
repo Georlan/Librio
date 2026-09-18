@@ -1,20 +1,7 @@
 import { FormEvent, useMemo, useState } from 'react'
+import SwipeDeck, { Book } from './components/SwipeDeck'
 
 type Tab = 'discover' | 'library' | 'matches' | 'profile'
-
-type Book = {
-  id: number
-  title: string
-  author: string
-  owner: string
-  course: string
-  campus: string
-  rating: number
-  loans: number
-  maxDays: number
-  cover: string
-  note: string
-}
 
 type ShelfBook = {
   id: number
@@ -87,7 +74,6 @@ const navItems: Array<{ id: Tab; icon: string; label: string }> = [
 
 function App() {
   const [tab, setTab] = useState<Tab>('discover')
-  const [bookIndex, setBookIndex] = useState(0)
   const [likedIds, setLikedIds] = useState<number[]>([])
   const [shelf, setShelf] = useState<ShelfBook[]>(initialShelf)
   const [showAddBook, setShowAddBook] = useState(false)
@@ -99,28 +85,17 @@ function App() {
     { id: 3, fromMe: false, text: 'Posso levar amanhã. Estarei perto da biblioteca às 15h.', time: '13:43' },
   ])
 
-  const currentBook = discoverBooks[bookIndex % discoverBooks.length]
-
   const availableCount = useMemo(
     () => shelf.filter((book) => book.available).length,
     [shelf],
   )
 
-  function nextBook() {
-    setBookIndex((value) => (value + 1) % discoverBooks.length)
+  function handleLike(book: Book) {
+    setLikedIds((ids) => (ids.includes(book.id) ? ids : [...ids, book.id]))
   }
 
-  function showFeedback(message: string) {
-    setToast(message)
-    window.setTimeout(() => setToast(''), 2200)
-  }
-
-  function handleLike() {
-    if (!likedIds.includes(currentBook.id)) {
-      setLikedIds((ids) => [...ids, currentBook.id])
-    }
-    showFeedback('Interesse enviado ✨')
-    nextBook()
+  function handleUndoLike(book: Book) {
+    setLikedIds((ids) => ids.filter((id) => id !== book.id))
   }
 
   function addBook(event: FormEvent<HTMLFormElement>) {
@@ -174,62 +149,21 @@ function App() {
 
       <main className="content">
         {tab === 'discover' && (
-          <section className="discover">
-            <div className="section-heading">
+          <section className="discover swipe-discover">
+            <div className="swipe-titlebar">
               <div>
                 <p className="eyebrow">POR PERTO</p>
-                <h1>O que você quer ler agora?</h1>
+                <h1>Descubra sua próxima leitura.</h1>
               </div>
               <button className="round-button" aria-label="Filtros">☷</button>
             </div>
 
-            <article className="book-card">
-              <div className="cover-wrap">
-                <img src={currentBook.cover} alt={'Capa de ' + currentBook.title} className="cover" />
-                <div className="distance-pill">no seu campus</div>
-              </div>
-
-              <div className="book-info">
-                <div className="book-title-row">
-                  <div>
-                    <p className="eyebrow">DISPONÍVEL</p>
-                    <h2>{currentBook.title}</h2>
-                    <p className="author">{currentBook.author}</p>
-                  </div>
-                  <div className="days">
-                    <strong>{currentBook.maxDays}</strong>
-                    <span>dias</span>
-                  </div>
-                </div>
-
-                <div className="owner-card">
-                  <div className="owner-avatar">{currentBook.owner.charAt(0)}</div>
-                  <div className="owner-copy">
-                    <strong>{currentBook.owner}</strong>
-                    <span>{currentBook.course}</span>
-                  </div>
-                  <div className="rating">
-                    ★ {currentBook.rating}
-                    <span>{currentBook.loans} empréstimos</span>
-                  </div>
-                </div>
-
-                <p className="note">“{currentBook.note}”</p>
-              </div>
-            </article>
-
-            <div className="actions">
-              <button className="action secondary" onClick={nextBook}>
-                <span>×</span>
-                Passar
-              </button>
-              <button className="action primary" onClick={handleLike}>
-                <span>♥</span>
-                Quero ler
-              </button>
-            </div>
-
-            <p className="swipe-hint">Passe para descobrir · curta para demonstrar interesse</p>
+            <SwipeDeck
+              books={discoverBooks}
+              onLike={handleLike}
+              onUndoLike={handleUndoLike}
+              onFeedback={showFeedback}
+            />
           </section>
         )}
 
