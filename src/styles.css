@@ -1675,3 +1675,330 @@ input:focus-visible {
     display: none;
   }
 }
+
+
+/* --- Screenshot review refinements --- */
+:root {
+  --topbar-h: 66px;
+  --bottom-nav-space: 78px;
+}
+
+.app {
+  overflow-x: clip;
+  padding-top: var(--topbar-h);
+  padding-bottom: calc(var(--bottom-nav-space) + env(safe-area-inset-bottom));
+}
+
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 45;
+  min-height: var(--topbar-h);
+  height: var(--topbar-h);
+  padding-top: 9px;
+  padding-bottom: 9px;
+  background:
+    linear-gradient(rgba(247, 240, 227, 0.985), rgba(247, 240, 227, 0.975)),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(83, 72, 56, 0.035) 4px);
+  box-shadow:
+    0 1px 0 rgba(71, 61, 48, 0.08),
+    0 7px 20px rgba(67, 54, 38, 0.055);
+}
+
+.content {
+  padding-top: 15px;
+  padding-bottom: 18px;
+}
+
+.swipe-titlebar {
+  margin-bottom: 10px;
+}
+
+.swipe-titlebar h1 {
+  max-width: 270px;
+  font-size: clamp(24px, 6.6vw, 32px);
+  line-height: 0.96;
+}
+
+.discovery-tabs {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border-color: rgba(74, 64, 51, 0.14);
+  background:
+    linear-gradient(rgba(247,240,227,0.9), rgba(240,230,211,0.82)),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(80,68,51,0.025) 4px);
+  box-shadow: inset 0 0 18px rgba(101, 79, 50, 0.035);
+}
+
+.discovery-tabs button {
+  z-index: 1;
+  color: #71695f;
+  font-size: 10px;
+}
+
+.discovery-tabs button.active {
+  color: #fff8e9;
+  background:
+    radial-gradient(circle at 23% 28%, rgba(255,255,255,0.08), transparent 22%),
+    linear-gradient(168deg, #6c8054, #4b6242);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.05),
+    0 4px 9px rgba(53,67,45,0.14);
+  transform: rotate(-0.8deg);
+}
+
+.discovery-tabs button.active::before {
+  display: none;
+}
+
+.swipe-deck {
+  height: clamp(418px, 52dvh, 470px);
+}
+
+.swipe-card {
+  box-shadow:
+    0 15px 34px rgba(58, 46, 34, 0.17),
+    inset 0 0 26px rgba(94, 76, 53, 0.03);
+}
+
+.swipe-art {
+  height: 58%;
+  background:
+    radial-gradient(circle at 16% 22%, rgba(185,74,59,0.24), transparent 28%),
+    radial-gradient(circle at 87% 76%, rgba(95,127,145,0.23), transparent 31%),
+    linear-gradient(135deg, rgba(86,104,68,0.14), transparent 34%),
+    #d8cebc;
+}
+
+.swipe-art-blur {
+  inset: -40px;
+  opacity: 0.28;
+  filter: blur(38px) saturate(0.7) contrast(0.92);
+  mix-blend-mode: multiply;
+}
+
+.swipe-art::before {
+  background:
+    linear-gradient(154deg, rgba(185,74,59,0.17) 0 8%, transparent 9% 52%, rgba(95,127,145,0.14) 53% 67%, transparent 68%),
+    radial-gradient(ellipse at 22% 82%, rgba(86,104,68,0.17), transparent 38%),
+    linear-gradient(to bottom, rgba(252,247,237,0.08), transparent 28%, rgba(40,40,34,0.08));
+}
+
+.swipe-cover {
+  padding: 10px 46px 8px;
+  filter:
+    saturate(0.95)
+    contrast(1.01)
+    drop-shadow(0 13px 21px rgba(39,31,23,0.22));
+}
+
+.swipe-book-body {
+  height: 42%;
+  padding: 12px 16px 10px;
+}
+
+.swipe-book-main h2 {
+  font-size: clamp(25px, 6.6vw, 31px);
+}
+
+.swipe-days {
+  width: 50px;
+  min-height: 53px;
+}
+
+.swipe-tags {
+  margin-top: 7px;
+}
+
+.swipe-owner-row {
+  margin-top: 7px;
+  padding-top: 7px;
+}
+
+.swipe-note {
+  margin-top: 5px;
+}
+
+.swipe-actions {
+  width: min(100% - 14px, 390px);
+  margin-top: -10px;
+  padding-bottom: 3px;
+}
+
+.swipe-action-item strong {
+  margin-top: 4px;
+  font-size: 9px;
+}
+
+.swipe-action-item span {
+  font-size: 8.5px;
+  line-height: 1;
+}
+
+.swipe-action--rewind {
+  width: 43px;
+  height: 43px;
+  margin-top: 7px;
+}
+
+.swipe-action--pass,
+.swipe-action--like {
+  width: 54px;
+  height: 54px;
+}
+
+.library-screen,
+.matches-screen,
+.profile-screen {
+  position: relative;
+  min-height: calc(100dvh - var(--topbar-h) - var(--bottom-nav-space) - 28px);
+}
+
+.library-screen::after,
+.matches-screen::after,
+.profile-screen::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  right: -48px;
+  bottom: 52px;
+  width: 150px;
+  height: 170px;
+  opacity: 0.12;
+  background:
+    radial-gradient(ellipse at 48% 36%, var(--blue) 0 26%, transparent 28%),
+    radial-gradient(ellipse at 63% 60%, var(--red) 0 20%, transparent 22%),
+    radial-gradient(ellipse at 28% 72%, var(--green) 0 24%, transparent 26%);
+  filter: blur(1.5px);
+  transform: rotate(-11deg);
+}
+
+.library-screen::after {
+  right: -30px;
+  bottom: 86px;
+  opacity: 0.1;
+}
+
+.matches-screen::after {
+  right: auto;
+  left: -58px;
+  bottom: 78px;
+  transform: rotate(13deg);
+}
+
+.match-card {
+  margin-bottom: 8px;
+  padding: 12px 10px;
+  border: 1px solid rgba(75,64,51,0.11);
+  border-radius: 5px 11px 7px 10px;
+  background:
+    linear-gradient(rgba(250,244,232,0.86), rgba(246,238,222,0.82)),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(76,64,49,0.02) 4px);
+  box-shadow: 0 7px 16px rgba(60,48,35,0.055);
+}
+
+.match-card:nth-of-type(even) {
+  transform: rotate(0.25deg);
+}
+
+.match-card::before {
+  left: 60px;
+  bottom: 8px;
+  width: 48px;
+  height: 3px;
+}
+
+.wish-card > div {
+  background-image:
+    radial-gradient(circle at 24% 20%, rgba(255,255,255,0.13), transparent 22%),
+    radial-gradient(circle at 78% 76%, rgba(0,0,0,0.12), transparent 32%);
+}
+
+.wish-card:nth-child(1) > div {
+  background-color: #4d664d;
+  background-image:
+    radial-gradient(circle at 18% 24%, rgba(152,180,126,0.36), transparent 26%),
+    radial-gradient(circle at 78% 73%, rgba(36,55,41,0.34), transparent 32%);
+}
+
+.wish-card:nth-child(2) > div {
+  background-color: #678493;
+  background-image:
+    radial-gradient(circle at 24% 18%, rgba(151,190,206,0.34), transparent 24%),
+    radial-gradient(circle at 78% 75%, rgba(44,78,92,0.38), transparent 34%);
+}
+
+.wish-card:nth-child(3) > div {
+  background-color: #b95549;
+  background-image:
+    radial-gradient(circle at 22% 20%, rgba(226,137,116,0.32), transparent 24%),
+    radial-gradient(circle at 78% 72%, rgba(112,53,46,0.38), transparent 34%);
+}
+
+.bottom-nav {
+  z-index: 50;
+  bottom: max(6px, env(safe-area-inset-bottom));
+  box-shadow:
+    0 13px 30px rgba(60,49,36,0.16),
+    0 0 0 1px rgba(255,255,255,0.18);
+}
+
+@media (max-width: 430px) {
+  :root {
+    --topbar-h: 64px;
+    --bottom-nav-space: 76px;
+  }
+
+  .topbar {
+    min-height: var(--topbar-h);
+    height: var(--topbar-h);
+  }
+
+  .content {
+    padding-top: 12px;
+  }
+
+  .swipe-deck {
+    height: clamp(410px, 51dvh, 452px);
+  }
+
+  .swipe-art {
+    height: 57%;
+  }
+
+  .swipe-book-body {
+    height: 43%;
+  }
+
+  .swipe-cover {
+    padding: 9px 43px 7px;
+  }
+
+  .swipe-actions {
+    margin-top: -8px;
+  }
+}
+
+@media (max-height: 760px) and (max-width: 430px) {
+  .swipe-deck {
+    height: 395px;
+  }
+
+  .swipe-art {
+    height: 54%;
+  }
+
+  .swipe-book-body {
+    height: 46%;
+  }
+
+  .swipe-note {
+    display: none;
+  }
+
+  .swipe-action-item span {
+    display: none;
+  }
+}
