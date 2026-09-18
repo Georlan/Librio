@@ -90,6 +90,11 @@ function App() {
     [shelf],
   )
 
+  function showFeedback(message: string) {
+    setToast(message)
+    window.setTimeout(() => setToast(''), 1800)
+  }
+
   function handleLike(book: Book) {
     setLikedIds((ids) => (ids.includes(book.id) ? ids : [...ids, book.id]))
   }
