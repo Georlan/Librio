@@ -1998,7 +1998,215 @@ input:focus-visible {
     display: none;
   }
 
-  .swipe-action-item span {
-    display: none;
+
+/* --- Generated watercolor asset integration --- */
+
+body {
+  background-color: #efe5d4;
+  background-image:
+    linear-gradient(rgba(247, 240, 227, 0.12), rgba(239, 229, 212, 0.08)),
+    url("/assets/librio/paper-bg.webp");
+  background-size: auto, 720px 720px;
+  background-repeat: repeat, repeat;
+  background-attachment: fixed, fixed;
+}
+
+body::before {
+  display: none;
+}
+
+.app::before,
+.app::after {
+  display: none;
+}
+
+.topbar {
+  background-color: rgba(247, 240, 227, 0.97);
+  background-image:
+    linear-gradient(rgba(247, 240, 227, 0.88), rgba(247, 240, 227, 0.88)),
+    url("/assets/librio/paper-bg.webp");
+  background-size: auto, 520px 520px;
+  background-position: center, center 18%;
+}
+
+.discovery-tabs button.active {
+  background-color: transparent;
+  background-image: url("/assets/librio/active-swatch.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  box-shadow: none;
+  transform: rotate(-0.45deg);
+}
+
+.round-button.accent {
+  background-color: transparent;
+  background-image: url("/assets/librio/active-swatch.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 155% 115%;
+  box-shadow: 0 7px 16px rgba(62, 77, 49, 0.15);
+}
+
+.swipe-card,
+.stat-card,
+.library-item,
+.profile-score,
+.community-card,
+.modal,
+.chat-book-context,
+.message,
+.match-card {
+  background-color: rgba(249, 242, 228, 0.96);
+  background-image:
+    linear-gradient(rgba(250, 244, 232, 0.86), rgba(247, 239, 224, 0.9)),
+    url("/assets/librio/paper-bg.webp");
+  background-size: auto, 480px 480px;
+  background-position: center, center;
+}
+
+.swipe-book-body {
+  background-color: rgba(249, 242, 228, 0.97);
+  background-image:
+    linear-gradient(rgba(250, 244, 232, 0.87), rgba(247, 239, 224, 0.92)),
+    url("/assets/librio/paper-bg.webp");
+  background-size: auto, 420px 420px;
+}
+
+.swipe-campus-pill {
+  min-width: 98px;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 10px 15px 11px;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: url("/assets/librio/paper-label.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  box-shadow: none;
+  transform: rotate(-2deg);
+}
+
+.swipe-campus-pill::before {
+  display: none;
+}
+
+.paper-tape {
+  opacity: 0.22;
+}
+
+.swipe-action {
+  overflow: visible;
+  border: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none;
+}
+
+.swipe-action::after {
+  display: none;
+}
+
+.swipe-action img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 7px 7px rgba(42, 34, 27, 0.16));
+}
+
+.swipe-action--rewind {
+  width: 48px;
+  height: 48px;
+  margin-top: 6px;
+  transform: rotate(-2deg);
+}
+
+.swipe-action--pass,
+.swipe-action--like {
+  width: 61px;
+  height: 61px;
+}
+
+.swipe-action--pass {
+  transform: rotate(1.5deg);
+}
+
+.swipe-action--like {
+  transform: rotate(-1.5deg);
+}
+
+.swipe-action:active {
+  transform: scale(0.92) rotate(-2deg);
+}
+
+.interest-banner {
+  border: 0;
+  background-color: #405337;
+  background-image:
+    linear-gradient(rgba(35, 52, 39, 0.28), rgba(35, 52, 39, 0.2)),
+    url("/assets/librio/active-swatch.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto, 118% 150%;
+  box-shadow: 0 11px 22px rgba(53, 65, 44, 0.13);
+}
+
+.interest-banner::after {
+  display: none;
+}
+
+.bottom-nav {
+  background-color: rgba(247, 240, 227, 0.97);
+  background-image:
+    linear-gradient(rgba(247, 240, 227, 0.86), rgba(243, 233, 214, 0.9)),
+    url("/assets/librio/paper-bg.webp");
+  background-size: auto, 460px 460px;
+}
+
+.bottom-nav button.active {
+  color: #fff8e9;
+}
+
+.bottom-nav button.active::before {
+  inset: -2px 1px -1px;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: url("/assets/librio/active-swatch.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  clip-path: none;
+  transform: rotate(-1.2deg);
+  opacity: 0.96;
+}
+
+.chat-panel {
+  background-color: #efe5d4;
+  background-image:
+    linear-gradient(rgba(239, 229, 212, 0.22), rgba(239, 229, 212, 0.14)),
+    url("/assets/librio/paper-bg.webp");
+  background-size: auto, 720px 720px;
+}
+
+@media (max-width: 430px) {
+  body {
+    background-size: auto, 620px 620px;
+  }
+
+  .swipe-action--rewind {
+    width: 46px;
+    height: 46px;
+  }
+
+  .swipe-action--pass,
+  .swipe-action--like {
+    width: 58px;
+    height: 58px;
   }
 }
