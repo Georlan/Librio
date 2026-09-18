@@ -18,6 +18,7 @@ export type Book = {
   maxDays: number
   cover: string
   note: string
+  tags: string[]
 }
 
 type Decision = 'like' | 'pass'
@@ -251,35 +252,43 @@ export default function SwipeDeck({
       </div>
 
       <div className="swipe-actions" aria-label="Ações do cartão">
-        <button
-          className="swipe-action swipe-action--rewind"
-          onClick={rewind}
-          disabled={history.length === 0}
-          aria-label="Desfazer última deslizada"
-          title="Desfazer"
-        >
-          ↶
-        </button>
-        <button
-          className="swipe-action swipe-action--pass"
-          onClick={() => commit('pass')}
-          aria-label="Passar este livro"
-        >
-          ×
-        </button>
-        <button
-          className="swipe-action swipe-action--like"
-          onClick={() => commit('like')}
-          aria-label="Quero ler este livro"
-        >
-          ♥
-        </button>
-      </div>
+        <div className="swipe-action-item swipe-action-item--rewind">
+          <button
+            className="swipe-action swipe-action--rewind"
+            onClick={rewind}
+            disabled={history.length === 0}
+            aria-label="Desfazer última deslizada"
+            title="Desfazer"
+          >
+            ↶
+          </button>
+          <strong>VOLTAR</strong>
+          <span>talvez depois</span>
+        </div>
 
-      <div className="gesture-legend" aria-hidden="true">
-        <span>← passar</span>
-        <span>arraste o cartão</span>
-        <span>quero ler →</span>
+        <div className="swipe-action-item swipe-action-item--pass">
+          <button
+            className="swipe-action swipe-action--pass"
+            onClick={() => commit('pass')}
+            aria-label="Passar este livro"
+          >
+            ×
+          </button>
+          <strong>PASSAR</strong>
+          <span>não é agora</span>
+        </div>
+
+        <div className="swipe-action-item swipe-action-item--like">
+          <button
+            className="swipe-action swipe-action--like"
+            onClick={() => commit('like')}
+            aria-label="Quero ler este livro"
+          >
+            ♥
+          </button>
+          <strong>QUERO LER</strong>
+          <span>essa sim!</span>
+        </div>
       </div>
     </div>
   )
@@ -300,6 +309,8 @@ function BookCardContent({ book, muted = false }: { book: Book; muted?: boolean 
           draggable={false}
         />
         <div className="swipe-campus-pill">no seu campus</div>
+        <div className="paper-tape paper-tape--one" aria-hidden="true" />
+        <div className="paper-tape paper-tape--two" aria-hidden="true" />
       </div>
 
       <div className="swipe-book-body">
@@ -313,6 +324,12 @@ function BookCardContent({ book, muted = false }: { book: Book; muted?: boolean 
             <strong>{book.maxDays}</strong>
             <span>dias</span>
           </div>
+        </div>
+
+        <div className="swipe-tags">
+          {book.tags.slice(0, 3).map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
         </div>
 
         <div className="swipe-owner-row">
