@@ -2010,7 +2010,7 @@ body {
   background-color: #efe5d4;
   background-image:
     linear-gradient(rgba(247, 240, 227, 0.10), rgba(239, 229, 212, 0.08)),
-    url("/assets/librio/paper-bg.svg");
+    var(--art-paper-image, none);
   background-size: auto, 720px 720px;
   background-repeat: repeat, repeat;
 }
@@ -2020,12 +2020,12 @@ body {
   background-color: rgba(247, 240, 227, 0.97);
   background-image:
     linear-gradient(rgba(247, 240, 227, 0.88), rgba(247, 240, 227, 0.88)),
-    url("/assets/librio/paper-bg.svg");
+    var(--art-paper-image, none);
   background-size: auto, 520px 520px;
 }
 
 .discovery-tabs button.active {
-  background: transparent url("/assets/librio/active-swatch.svg") center / 100% 100% no-repeat !important;
+  background: transparent var(--art-active-swatch-image, none) center / 100% 100% no-repeat !important;
   box-shadow: none !important;
 }
 
@@ -2037,7 +2037,7 @@ body {
   padding: 10px 15px 11px;
   border: 0;
   border-radius: 0;
-  background: transparent url("/assets/librio/paper-label.svg") center / 100% 100% no-repeat !important;
+  background: transparent var(--art-campus-label-image, none) center / 100% 100% no-repeat !important;
   box-shadow: none;
   transform: rotate(-2deg);
 }
@@ -2106,7 +2106,7 @@ body {
 .bottom-nav button.active::before {
   inset: -2px 1px -1px;
   border-radius: 0;
-  background: transparent url("/assets/librio/active-swatch.svg") center / 100% 100% no-repeat !important;
+  background: transparent var(--art-active-swatch-image, none) center / 100% 100% no-repeat !important;
   clip-path: none;
   box-shadow: none;
 }
@@ -2124,56 +2124,87 @@ body {
   }
 }
 
+/* --- Canonical art slots -------------------------------------------------
+   Artwork lives in files. CSS only sizes, positions and animates it.
+   The runtime art manifest chooses the approved asset and legacy fallback.
+------------------------------------------------------------------------- */
 
-/* --- Watercolor fallback: stays visible even if external assets fail --- */
-.swipe-action {
-  position: relative;
-  isolation: isolate;
+.art-asset {
+  display: inline-block;
+  line-height: 0;
 }
 
-.swipe-action::before {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  z-index: -1;
-  border-radius: 49% 51% 46% 54% / 53% 47% 55% 45%;
-  opacity: .98;
-  filter: saturate(.92);
-  box-shadow:
-    inset 0 0 0 2px rgba(255,248,232,.24),
-    0 7px 13px rgba(58,45,35,.14);
+.art-asset__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.swipe-action--rewind::before {
-  background:
-    radial-gradient(circle at 28% 24%, rgba(255,255,255,.15), transparent 23%),
-    radial-gradient(circle at 76% 72%, rgba(33,67,84,.28), transparent 34%),
-    #587b90;
-  transform: rotate(-4deg);
+.art-asset--fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1;
 }
 
-.swipe-action--pass::before {
-  background:
-    radial-gradient(circle at 28% 24%, rgba(255,255,255,.12), transparent 23%),
-    radial-gradient(circle at 75% 73%, rgba(120,39,34,.30), transparent 35%),
-    #bd4b3f;
-  transform: rotate(3deg);
+/* No circle, paint, outline or pseudo-art is created by the button itself. */
+.swipe-action::before,
+.swipe-action::after {
+  content: none !important;
+  display: none !important;
 }
 
-.swipe-action--like::before {
-  background:
-    radial-gradient(circle at 26% 22%, rgba(255,255,255,.12), transparent 23%),
-    radial-gradient(circle at 75% 73%, rgba(37,59,32,.30), transparent 35%),
-    #4d633d;
-  transform: rotate(-3deg);
+.swipe-action > .art-asset {
+  width: 100%;
+  height: 100%;
 }
 
-.swipe-action > img {
-  position: relative;
-  z-index: 1;
+.swipe-action .art-asset__img {
+  filter: drop-shadow(0 7px 7px rgba(42, 34, 27, 0.13));
 }
 
-.swipe-action > img:not([src]),
-.swipe-action > img[src=""] {
+.swipe-action .art-asset--fallback {
+  font-size: 31px;
+  color: var(--ink-soft);
+}
+
+.swipe-action:disabled .art-asset {
+  opacity: 0.34;
+  filter: grayscale(0.8);
+}
+
+/* Active states use an art file under the text instead of CSS painting. */
+.discovery-tabs button.active::before {
   display: none;
+}
+
+.discovery-tabs button.active {
+  background-color: transparent !important;
+  background-image: var(--art-active-swatch-image, none) !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+.swipe-campus-pill {
+  background-color: transparent !important;
+  background-image: var(--art-campus-label-image, none) !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+.bottom-nav button.active::before {
+  background-color: transparent !important;
+  background-image: var(--art-active-swatch-image, none) !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
 }
