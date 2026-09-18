@@ -3,7 +3,7 @@
   "short_name": "Librio",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f4f1e8",
-  "theme_color": "#101815",
+  "background_color": "#efe5d4",
+  "theme_color": "#28382c",
   "description": "Descubra livros disponíveis na sua comunidade."
 }
