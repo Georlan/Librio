@@ -1658,17 +1658,16 @@ input:focus-visible {
 
 .app {
   overflow-x: clip;
-  padding-top: var(--topbar-h);
+  padding-top: 0;
   padding-bottom: calc(var(--bottom-nav-space) + env(safe-area-inset-bottom));
 }
 
 .topbar {
-  position: fixed;
-  inset: 0 0 auto 0;
+  position: sticky;
+  top: 0;
   z-index: 45;
   min-height: var(--topbar-h);
-  height: var(--topbar-h);
-  padding-top: 9px;
+  padding-top: calc(9px + env(safe-area-inset-top, 0px));
   padding-bottom: 9px;
   background:
     linear-gradient(rgba(247, 240, 227, 0.985), rgba(247, 240, 227, 0.975)),
@@ -1926,7 +1925,6 @@ input:focus-visible {
 
   .topbar {
     min-height: var(--topbar-h);
-    height: var(--topbar-h);
   }
 
   .content {
@@ -2020,36 +2018,30 @@ body {
 }
 
 /* The button itself must not draw the old CSS circle.
-   The generated image is the complete visible control. */
+   The transparent artwork image is the complete visible control. */
 .swipe-action,
 .swipe-action--rewind,
 .swipe-action--pass,
 .swipe-action--like {
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  filter: none !important;
-  color: transparent !important;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   overflow: visible;
 }
 
-.swipe-action::after {
-  display: none !important;
-}
-
 .swipe-action--rewind {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   margin-top: 5px;
   transform: rotate(-2deg);
 }
 
 .swipe-action--pass,
 .swipe-action--like {
-  width: 64px;
-  height: 64px;
+  width: 62px;
+  height: 62px;
 }
 
 .swipe-action--pass {
@@ -2060,20 +2052,8 @@ body {
   transform: rotate(-1deg);
 }
 
-.swipe-action > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: contain;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  filter: drop-shadow(0 7px 7px rgba(42, 34, 27, 0.13));
-}
-
 .swipe-action:active {
-  transform: scale(0.92) rotate(-1deg);
+  transform: scale(0.92);
 }
 
 .bottom-nav button.active::before {
@@ -2082,19 +2062,6 @@ body {
   background: transparent var(--art-active-swatch-image, none) center / 100% 100% no-repeat !important;
   clip-path: none;
   box-shadow: none;
-}
-
-@media (max-width: 430px) {
-  .swipe-action--rewind {
-    width: 48px;
-    height: 48px;
-  }
-
-  .swipe-action--pass,
-  .swipe-action--like {
-    width: 62px;
-    height: 62px;
-  }
 }
 
 /* --- Canonical art slots -------------------------------------------------
