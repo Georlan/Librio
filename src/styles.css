@@ -2010,7 +2010,7 @@ body {
   background-color: #efe5d4;
   background-image:
     linear-gradient(rgba(247, 240, 227, 0.10), rgba(239, 229, 212, 0.08)),
-    url("/assets/librio/paper-bg.webp");
+    url("/assets/librio/paper-bg.svg");
   background-size: auto, 720px 720px;
   background-repeat: repeat, repeat;
 }
@@ -2020,12 +2020,12 @@ body {
   background-color: rgba(247, 240, 227, 0.97);
   background-image:
     linear-gradient(rgba(247, 240, 227, 0.88), rgba(247, 240, 227, 0.88)),
-    url("/assets/librio/paper-bg.webp");
+    url("/assets/librio/paper-bg.svg");
   background-size: auto, 520px 520px;
 }
 
 .discovery-tabs button.active {
-  background: transparent url("/assets/librio/active-swatch.webp") center / 100% 100% no-repeat !important;
+  background: transparent url("/assets/librio/active-swatch.svg") center / 100% 100% no-repeat !important;
   box-shadow: none !important;
 }
 
@@ -2037,7 +2037,7 @@ body {
   padding: 10px 15px 11px;
   border: 0;
   border-radius: 0;
-  background: transparent url("/assets/librio/paper-label.webp") center / 100% 100% no-repeat !important;
+  background: transparent url("/assets/librio/paper-label.svg") center / 100% 100% no-repeat !important;
   box-shadow: none;
   transform: rotate(-2deg);
 }
@@ -2106,7 +2106,7 @@ body {
 .bottom-nav button.active::before {
   inset: -2px 1px -1px;
   border-radius: 0;
-  background: transparent url("/assets/librio/active-swatch.webp") center / 100% 100% no-repeat !important;
+  background: transparent url("/assets/librio/active-swatch.svg") center / 100% 100% no-repeat !important;
   clip-path: none;
   box-shadow: none;
 }
@@ -2122,4 +2122,58 @@ body {
     width: 62px;
     height: 62px;
   }
+}
+
+
+/* --- Watercolor fallback: stays visible even if external assets fail --- */
+.swipe-action {
+  position: relative;
+  isolation: isolate;
+}
+
+.swipe-action::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  z-index: -1;
+  border-radius: 49% 51% 46% 54% / 53% 47% 55% 45%;
+  opacity: .98;
+  filter: saturate(.92);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,248,232,.24),
+    0 7px 13px rgba(58,45,35,.14);
+}
+
+.swipe-action--rewind::before {
+  background:
+    radial-gradient(circle at 28% 24%, rgba(255,255,255,.15), transparent 23%),
+    radial-gradient(circle at 76% 72%, rgba(33,67,84,.28), transparent 34%),
+    #587b90;
+  transform: rotate(-4deg);
+}
+
+.swipe-action--pass::before {
+  background:
+    radial-gradient(circle at 28% 24%, rgba(255,255,255,.12), transparent 23%),
+    radial-gradient(circle at 75% 73%, rgba(120,39,34,.30), transparent 35%),
+    #bd4b3f;
+  transform: rotate(3deg);
+}
+
+.swipe-action--like::before {
+  background:
+    radial-gradient(circle at 26% 22%, rgba(255,255,255,.12), transparent 23%),
+    radial-gradient(circle at 75% 73%, rgba(37,59,32,.30), transparent 35%),
+    #4d633d;
+  transform: rotate(-3deg);
+}
+
+.swipe-action > img {
+  position: relative;
+  z-index: 1;
+}
+
+.swipe-action > img:not([src]),
+.swipe-action > img[src=""] {
+  display: none;
 }
