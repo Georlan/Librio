@@ -669,7 +669,7 @@ input:focus-visible {
   align-items: start;
   gap: 6px;
   width: min(100% - 20px, 410px);
-  margin: -22px auto 0;
+  margin: 8px auto 0;
   padding: 0 7px;
 }
 
@@ -685,68 +685,41 @@ input:focus-visible {
   position: relative;
   display: grid;
   place-items: center;
+  padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: 0;
+  background: transparent;
   cursor: pointer;
-  color: #fff8eb;
-  transition: transform 130ms ease, filter 130ms ease, opacity 130ms ease;
-  filter: saturate(0.88);
-}
-
-.swipe-action::after {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border: 1px solid rgba(41,34,27,0.12);
-  border-radius: 47% 53% 51% 49% / 55% 46% 54% 45%;
-  transform: rotate(6deg);
+  overflow: visible;
+  transition: transform 130ms ease, opacity 130ms ease;
 }
 
 .swipe-action:active {
-  transform: scale(0.91) rotate(-2deg);
+  transform: scale(0.92);
 }
 
 .swipe-action:disabled {
   cursor: default;
-  opacity: 0.28;
+  opacity: 0.32;
 }
 
 .swipe-action--rewind {
-  width: 45px;
-  height: 45px;
-  margin-top: 6px;
-  background:
-    radial-gradient(circle at 34% 28%, rgba(255,255,255,0.18), transparent 18%),
-    radial-gradient(circle at 74% 70%, rgba(37,67,83,0.28), transparent 35%),
-    #5f7f91;
-  font-size: 22px;
-  box-shadow: 0 7px 15px rgba(56,91,108,0.19);
-  transform: rotate(-3deg);
+  width: 48px;
+  height: 48px;
+  margin-top: 5px;
+  transform: rotate(-2deg);
 }
 
 .swipe-action--pass {
-  width: 57px;
-  height: 57px;
-  background:
-    radial-gradient(circle at 30% 28%, rgba(255,255,255,0.13), transparent 20%),
-    radial-gradient(circle at 72% 72%, rgba(128,42,37,0.29), transparent 36%),
-    #bf4a3e;
-  font-size: 34px;
-  font-weight: 300;
-  box-shadow: 0 8px 17px rgba(150,55,47,0.21);
-  transform: rotate(2deg);
+  width: 62px;
+  height: 62px;
+  transform: rotate(1deg);
 }
 
 .swipe-action--like {
-  width: 57px;
-  height: 57px;
-  background:
-    radial-gradient(circle at 30% 26%, rgba(255,255,255,0.13), transparent 20%),
-    radial-gradient(circle at 74% 72%, rgba(40,63,35,0.3), transparent 36%),
-    #5a7049;
-  font-size: 24px;
-  box-shadow: 0 8px 17px rgba(73,91,59,0.2);
-  transform: rotate(-2deg);
+  width: 62px;
+  height: 62px;
+  transform: rotate(-1deg);
 }
 
 .swipe-action-item strong {
@@ -1822,7 +1795,7 @@ input:focus-visible {
 
 .swipe-actions {
   width: min(100% - 14px, 390px);
-  margin-top: -10px;
+  margin-top: 16px;
   padding-bottom: 3px;
 }
 
