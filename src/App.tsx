@@ -30,6 +30,7 @@ const discoverBooks: Book[] = [
     maxDays: 30,
     cover: 'https://covers.openlibrary.org/b/isbn/9780441172719-L.jpg',
     note: 'Livro bem conservado. Posso entregar no intervalo da tarde.',
+    tags: ['Ficção', 'Clássico', 'Sci-fi'],
   },
   {
     id: 2,
@@ -43,6 +44,7 @@ const discoverBooks: Book[] = [
     maxDays: 21,
     cover: 'https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg',
     note: 'Edição de bolso. Algumas marcações a lápis.',
+    tags: ['Fantasia', 'Aventura', 'Clássico'],
   },
   {
     id: 3,
@@ -56,6 +58,7 @@ const discoverBooks: Book[] = [
     maxDays: 15,
     cover: 'https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg',
     note: 'Pode pegar na biblioteca do campus.',
+    tags: ['Distopia', 'Política', 'Clássico'],
   },
 ]
 
@@ -157,10 +160,16 @@ function App() {
           <section className="discover swipe-discover">
             <div className="swipe-titlebar">
               <div>
-                <p className="eyebrow">POR PERTO</p>
+                <p className="eyebrow">LIVROS MAIS PERTO</p>
                 <h1>Descubra sua próxima leitura.</h1>
               </div>
-              <button className="round-button" aria-label="Filtros">☷</button>
+              <button className="round-button filter-button" aria-label="Filtros">☷</button>
+            </div>
+
+            <div className="discovery-tabs" aria-label="Filtros de descoberta">
+              <button className="active">Descobrir</button>
+              <button onClick={() => showFeedback('Em alta entra quando tivermos dados reais')}>Em alta</button>
+              <button onClick={() => showFeedback('Filtro por proximidade entra com comunidades reais')}>Perto de você</button>
             </div>
 
             <SwipeDeck
