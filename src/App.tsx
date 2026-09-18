@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import SwipeDeck, { Book } from './components/SwipeDeck'
 
 type Tab = 'discover' | 'library' | 'matches' | 'profile'
@@ -87,6 +87,10 @@ function App() {
     { id: 2, fromMe: true, text: 'Sim! Faz tempo que quero ler.', time: '13:42' },
     { id: 3, fromMe: false, text: 'Posso levar amanhã. Estarei perto da biblioteca às 15h.', time: '13:43' },
   ])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [tab])
 
   const availableCount = useMemo(
     () => shelf.filter((book) => book.available).length,
@@ -182,7 +186,7 @@ function App() {
         )}
 
         {tab === 'library' && (
-          <section>
+          <section className="library-screen">
             <div className="section-heading">
               <div>
                 <p className="eyebrow">MINHA BIBLIOTECA</p>
@@ -233,7 +237,7 @@ function App() {
         )}
 
         {tab === 'matches' && (
-          <section>
+          <section className="matches-screen">
             <div className="section-heading">
               <div>
                 <p className="eyebrow">CONEXÕES</p>
@@ -278,7 +282,7 @@ function App() {
         )}
 
         {tab === 'profile' && (
-          <section>
+          <section className="profile-screen">
             <div className="profile-hero">
               <div className="profile-avatar">G</div>
               <div>
