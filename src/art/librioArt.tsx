@@ -88,6 +88,7 @@ export function ArtAsset({
   const source = sources[sourceIndex]
   const exhausted = sourceIndex >= sources.length
   const spec = LIBRIO_ART[slot]
+  const isActionAsset = slot.startsWith('actions.')
 
   if (exhausted) {
     return (
@@ -115,6 +116,9 @@ export function ArtAsset({
         src={source}
         alt={decorative ? '' : alt}
         draggable={false}
+        decoding="async"
+        loading={isActionAsset ? 'eager' : 'lazy'}
+        fetchPriority={isActionAsset ? 'high' : 'auto'}
         onError={() => setSourceIndex((index) => index + 1)}
       />
     </span>
