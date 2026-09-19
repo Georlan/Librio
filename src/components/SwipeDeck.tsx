@@ -68,6 +68,8 @@ export default function SwipeDeck({
   dragRef.current = drag
 
   const cardRef = useRef<HTMLElement | null>(null)
+  const dragFrameRef = useRef<number | null>(null)
+  const pendingDragRef = useRef({ x: 0, y: 0 })
 
   const gesture = useRef({
     active: false,
@@ -79,7 +81,28 @@ export default function SwipeDeck({
   })
 
   const currentBook = books[activeIndex]
-  const visibleBooks = books.slice(activeIndex, activeIndex + 3)
+  const visibleBooks = books.slice(activeIndex, activeIndex + 2)
+
+  const cancelScheduledDrag = useCallback(() => {
+    if (dragFrameRef.current !== null) {
+      cancelAnimationFrame(dragFrameRef.current)
+      dragFrameRef.current = null
+    }
+  }, [])
+
+  const scheduleDrag = useCallback((nextDrag: { x: number; y: number }) => {
+    pendingDragRef.current = nextDrag
+    dragRef.current = nextDrag
+
+    if (dragFrameRef.current !== null) return
+
+    dragFrameRef.current = requestAnimationFrame(() => {
+      dragFrameRef.current = null
+      setDrag(pendingDragRef.current)
+    })
+  }, [])
+
+  useEffect(() => cancelScheduledDrag, [cancelScheduledDrag])
 
   // Invariant check in development
   if (import.meta.env.DEV && currentBook) {
@@ -143,11 +166,12 @@ export default function SwipeDeck({
       activeIndexRef.current = currentIndex + 1
 
       // Zerar estado de drag para o novo card que assume o topo
+      cancelScheduledDrag()
       setDrag({ x: 0, y: 0 })
       setDragging(false)
       dragRef.current = { x: 0, y: 0 }
     },
-    [books, onFeedback, onLike],
+    [books, cancelScheduledDrag, onFeedback, onLike],
   )
 
   const undoLastDecision = useCallback(() => {
@@ -158,6 +182,7 @@ export default function SwipeDeck({
     setActiveIndex(last.previousIndex)
     activeIndexRef.current = last.previousIndex
 
+    cancelScheduledDrag()
     setDrag({ x: 0, y: 0 })
     setDragging(false)
     dragRef.current = { x: 0, y: 0 }
@@ -166,7 +191,7 @@ export default function SwipeDeck({
       onUndoLike(last.book)
     }
     onFeedback('Última deslizada desfeita')
-  }, [history, onFeedback, onUndoLike])
+  }, [cancelScheduledDrag, history, onFeedback, onUndoLike])
 
   const removeExitingCard = useCallback((id: string) => {
     setExitingCards((prev) => prev.filter((c) => c.id !== id))
@@ -212,8 +237,7 @@ export default function SwipeDeck({
       x: dx,
       y: Math.max(-80, Math.min(80, dy)),
     }
-    setDrag(nextDrag)
-    dragRef.current = nextDrag
+    scheduleDrag(nextDrag)
 
     gesture.current.lastX = event.clientX
     gesture.current.lastTime = performance.now()
@@ -241,6 +265,7 @@ export default function SwipeDeck({
     }
 
     // Gesto cancelado: somente aqui o card retorna suavemente para 0,0
+    cancelScheduledDrag()
     setDragging(false)
     setDrag({ x: 0, y: 0 })
     dragRef.current = { x: 0, y: 0 }
@@ -248,6 +273,7 @@ export default function SwipeDeck({
 
   function cancelPointer() {
     gesture.current.active = false
+    cancelScheduledDrag()
     setDragging(false)
     setDrag({ x: 0, y: 0 })
     dragRef.current = { x: 0, y: 0 }
@@ -357,7 +383,7 @@ export default function SwipeDeck({
             <ArtAsset slot="actions.rewind" decorative />
           </button>
           <strong>VOLTAR</strong>
-          <span>talvez depois</span>
+          <span className="swipe-action-caption">talvez depois</span>
         </div>
 
         <div className="swipe-action-item swipe-action-item--pass">
@@ -371,7 +397,7 @@ export default function SwipeDeck({
             <ArtAsset slot="actions.pass" decorative />
           </button>
           <strong>PASSAR</strong>
-          <span>não é agora</span>
+          <span className="swipe-action-caption">não é agora</span>
         </div>
 
         <div className="swipe-action-item swipe-action-item--like">
@@ -385,7 +411,7 @@ export default function SwipeDeck({
             <ArtAsset slot="actions.like" decorative />
           </button>
           <strong>QUERO LER</strong>
-          <span>essa sim!</span>
+          <span className="swipe-action-caption">essa sim!</span>
         </div>
       </div>
     </div>
@@ -454,15 +480,20 @@ function BookCardContent({ book, muted = false }: { book: Book; muted?: boolean 
   return (
     <>
       <div className="swipe-art">
-        <div
-          className="swipe-art-blur"
-          style={{ backgroundImage: `url("${book.cover}")` }}
-        />
+        {!muted && (
+          <div
+            className="swipe-art-blur"
+            style={{ backgroundImage: `url("${book.cover}")` }}
+          />
+        )}
         <img
           className="swipe-cover"
           src={book.cover}
           alt={muted ? '' : `Capa de ${book.title}`}
           draggable={false}
+          decoding="async"
+          loading={muted ? 'lazy' : 'eager'}
+          fetchPriority={muted ? 'low' : 'high'}
         />
         <div className="swipe-campus-pill">no seu campus</div>
         <div className="paper-tape paper-tape--one" aria-hidden="true" />
