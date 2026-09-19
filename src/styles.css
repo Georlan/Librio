@@ -2213,3 +2213,26 @@ body {
   background-size: 100% 100% !important;
   background-repeat: no-repeat !important;
 }
+
+
+/* --- Canonical swipe action sizing --------------------------------------
+   All three action artworks share the same visual footprint. The artwork
+   itself stays untouched; only its layout box is normalized here.
+------------------------------------------------------------------------- */
+.swipe-actions {
+  --swipe-action-size: 62px;
+}
+
+.swipe-action--rewind,
+.swipe-action--pass,
+.swipe-action--like {
+  width: var(--swipe-action-size) !important;
+  height: var(--swipe-action-size) !important;
+  margin-top: 0 !important;
+}
+
+@media (max-height: 760px) and (max-width: 430px) {
+  .swipe-actions {
+    --swipe-action-size: 54px;
+  }
+}
