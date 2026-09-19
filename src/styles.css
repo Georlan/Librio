@@ -333,7 +333,7 @@ input:focus-visible {
   transform-origin: 50% 92%;
   user-select: none;
   -webkit-user-select: none;
-  will-change: transform;
+  will-change: auto;
 }
 
 .swipe-card::after {
@@ -359,6 +359,7 @@ input:focus-visible {
 
 .swipe-card--top {
   z-index: 4;
+  will-change: transform;
   cursor: grab;
   touch-action: pan-y;
   transition: transform 320ms cubic-bezier(.2,.9,.2,1.18);
@@ -371,6 +372,7 @@ input:focus-visible {
 
 .swipe-card--exiting {
   z-index: 10 !important;
+  will-change: transform;
   pointer-events: none;
   transition: transform 260ms cubic-bezier(.22,.74,.2,1), opacity 260ms ease;
 }
@@ -758,7 +760,7 @@ input:focus-visible {
   letter-spacing: 0.08em;
 }
 
-.swipe-action-item span {
+.swipe-action-caption {
   margin-top: 1px;
   color: var(--muted);
   font-family: "Segoe Print", "Bradley Hand", cursive;
@@ -766,11 +768,11 @@ input:focus-visible {
   transform: rotate(-3deg);
 }
 
-.swipe-action-item--pass span {
+.swipe-action-item--pass .swipe-action-caption {
   transform: rotate(2deg);
 }
 
-.swipe-action-item--like span {
+.swipe-action-item--like .swipe-action-caption {
   color: var(--green);
   transform: rotate(-2deg);
 }
@@ -1672,7 +1674,7 @@ input:focus-visible {
     display: none;
   }
 
-  .swipe-action-item span {
+  .swipe-action-caption {
     display: none;
   }
 }
@@ -1831,7 +1833,7 @@ input:focus-visible {
   font-size: 9px;
 }
 
-.swipe-action-item span {
+.swipe-action-caption {
   font-size: 8.5px;
   line-height: 1;
 }
@@ -1946,6 +1948,39 @@ input:focus-visible {
 }
 
 @media (max-width: 430px) {
+
+  /* Mobile performance: preserve the paper aesthetic without expensive full-card filters. */
+  .swipe-card {
+    box-shadow:
+      0 10px 22px rgba(58, 46, 34, 0.14),
+      inset 0 0 16px rgba(94, 76, 53, 0.025);
+  }
+
+  .swipe-card--behind {
+    filter: none;
+    opacity: 0.76;
+  }
+
+  .swipe-card::after {
+    mix-blend-mode: normal;
+    opacity: 0.075;
+  }
+
+  .swipe-art-blur {
+    display: none;
+  }
+
+  .swipe-cover {
+    filter:
+      saturate(0.96)
+      contrast(1.01)
+      drop-shadow(0 8px 12px rgba(39,31,23,0.16));
+  }
+
+  .swipe-card--behind .swipe-owner-row,
+  .swipe-card--behind .swipe-note {
+    visibility: hidden;
+  }
   :root {
     --topbar-h: 64px;
     --bottom-nav-space: 76px;
@@ -1997,7 +2032,7 @@ input:focus-visible {
     display: none;
   }
 
-  .swipe-action-item span {
+  .swipe-action-caption {
     display: none;
   }
 }
@@ -2099,7 +2134,9 @@ body {
 
 .art-asset {
   display: inline-block;
+  margin: 0 !important;
   line-height: 0;
+  transform: none !important;
 }
 
 .art-asset__img {
