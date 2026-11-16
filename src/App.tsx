@@ -8,6 +8,7 @@ type ShelfBook = {
   title: string
   author: string
   available: boolean
+  cover?: string
 }
 
 type ChatMessage = {
@@ -91,9 +92,9 @@ const discoverBooks: Book[] = [
 ]
 
 const initialShelf: ShelfBook[] = [
-  { id: 1, title: 'Fundação', author: 'Isaac Asimov', available: true },
-  { id: 2, title: 'Sapiens', author: 'Yuval Noah Harari', available: false },
-  { id: 3, title: 'O Guia do Mochileiro das Galáxias', author: 'Douglas Adams', available: true },
+  { id: 1, title: 'Fundação', author: 'Isaac Asimov', available: true, cover: 'https://covers.openlibrary.org/b/isbn/9780553293357-M.jpg' },
+  { id: 2, title: 'Sapiens', author: 'Yuval Noah Harari', available: false, cover: 'https://covers.openlibrary.org/b/isbn/9780062316097-M.jpg' },
+  { id: 3, title: 'O Guia do Mochileiro das Galáxias', author: 'Douglas Adams', available: true, cover: 'https://covers.openlibrary.org/b/isbn/9780345391803-M.jpg' },
 ]
 
 const navItems: Array<{ id: Tab; icon: string; label: string }> = [
@@ -193,15 +194,15 @@ function App() {
             <div className="swipe-titlebar">
               <div>
                 <p className="eyebrow">LIVROS MAIS PERTO</p>
-                <h1>Descubra sua próxima leitura.</h1>
+                <h1>Encontre um livro para ler.</h1>
               </div>
               <button className="round-button filter-button" aria-label="Filtros">☷</button>
             </div>
 
             <div className="discovery-tabs" aria-label="Filtros de descoberta">
               <button className="active">Descobrir</button>
-              <button onClick={() => showFeedback('Em alta entra quando tivermos dados reais')}>Em alta</button>
-              <button onClick={() => showFeedback('Filtro por proximidade entra com comunidades reais')}>Perto de você</button>
+              <button onClick={() => showFeedback('Em breve, você poderá ver os livros mais procurados.')}>Em alta</button>
+              <button onClick={() => showFeedback('Em breve, você poderá filtrar por proximidade.')}>Perto de você</button>
             </div>
 
             <SwipeDeck
@@ -218,7 +219,7 @@ function App() {
             <div className="section-heading">
               <div>
                 <p className="eyebrow">MINHA BIBLIOTECA</p>
-                <h1>Sua estante, do seu jeito.</h1>
+                <h1>Minha estante</h1>
               </div>
               <button className="round-button accent" onClick={() => setShowAddBook(true)} aria-label="Adicionar livro">+</button>
             </div>
@@ -233,21 +234,24 @@ function App() {
                 <strong>{availableCount}</strong>
               </div>
               <div className="stat-card">
-                <span>Emprestados</span>
+                <span>Indisponíveis</span>
                 <strong>{shelf.length - availableCount}</strong>
               </div>
             </div>
 
             <div className="library-list">
+              {shelf.length === 0 && <div className="library-empty"><img src="/assets/loomi-estante-vazia.png" alt="" /><h2>Sua estante está vazia</h2><p>Adicione seu primeiro livro para compartilhar.</p><button className="submit-button" onClick={() => setShowAddBook(true)}>Adicionar livro</button></div>}
               {shelf.map((book) => (
                 <article className="library-item" key={book.id}>
-                  <div className="mini-cover">{book.title.charAt(0)}</div>
+                  <div className="mini-cover"><span aria-hidden="true">{book.title.charAt(0)}</span>{book.cover && <img src={book.cover} alt={"Capa de " + book.title} loading="lazy" onError={(event) => { event.currentTarget.style.display = "none" }} />}</div>
                   <div className="library-copy">
                     <strong>{book.title}</strong>
                     <span>{book.author}</span>
                   </div>
                   <button
                     className={'availability ' + (book.available ? 'is-available' : '')}
+                    aria-label={(book.available ? 'Marcar como indisponível: ' : 'Marcar como disponível: ') + book.title}
+                    aria-pressed={book.available}
                     onClick={() =>
                       setShelf((books) =>
                         books.map((item) =>
@@ -256,7 +260,9 @@ function App() {
                       )
                     }
                   >
+                    <span className="availability-dot" aria-hidden="true" />
                     {book.available ? 'Disponível' : 'Indisponível'}
+                    <span className="availability-change" aria-hidden="true">Alterar</span>
                   </button>
                 </article>
               ))}
@@ -269,43 +275,26 @@ function App() {
             <div className="section-heading">
               <div>
                 <p className="eyebrow">CONEXÕES</p>
-                <h1>Leitura também aproxima.</h1>
+                <h1>Suas conexões</h1>
               </div>
             </div>
 
-            <div className="interest-banner">
-              <div>
-                <span className="spark">✦</span>
-                <strong>{likedIds.length + 3} interesses recebidos</strong>
-                <p>Veja quem quer ler livros da sua estante.</p>
-              </div>
-              <button onClick={() => showFeedback('Lista de interessados será conectada ao backend')}>Ver</button>
+            <div className="connections-summary">
+              <div className="connections-icon" aria-hidden="true"><img src="/assets/loomi-conexoes.webp" alt="" /></div>
+              <div><strong>{likedIds.length + 3} interesses</strong><p>Em livros da sua estante</p></div>
+              <button onClick={() => showFeedback('Em breve, você poderá ver os interessados aqui.')}>Ver interesses <span aria-hidden="true">›</span></button>
             </div>
 
-            <h2 className="list-title">Seus matches</h2>
-            <article className="match-card" onClick={() => setShowChat(true)}>
-              <div className="match-avatar">M</div>
-              <div className="match-copy">
-                <div>
-                  <strong>Marina Alves</strong>
-                  <span className="match-badge">Duna</span>
-                </div>
-                <p>Posso levar amanhã. Estarei perto da biblioteca...</p>
-              </div>
-              <span className="match-time">13:43</span>
-            </article>
-
-            <article className="match-card muted">
-              <div className="match-avatar">L</div>
-              <div className="match-copy">
-                <div>
-                  <strong>Lucas Matos</strong>
-                  <span className="match-badge">O Hobbit</span>
-                </div>
-                <p>Match recente · diga oi 👋</p>
-              </div>
-              <span className="match-time">ontem</span>
-            </article>
+            <div className="connections-heading"><h2>Conversas</h2><span>2 conexões</span></div>
+            <button type="button" className="connection-row" onClick={() => setShowChat(true)} aria-label="Abrir conversa com Marina Alves sobre Duna">
+              <img className="connection-cover" src="https://covers.openlibrary.org/b/isbn/9780441172719-M.jpg" alt="" loading="lazy" />
+              <span className="connection-content"><span className="connection-top"><strong>Marina Alves</strong><time>13:43</time></span><span className="connection-book">Duna</span><span className="connection-message">Posso levar amanhã. Estarei perto da biblioteca...</span></span>
+              <span className="connection-arrow" aria-hidden="true">›</span>
+            </button>
+            <div className="connection-row connection-row--inactive">
+              <img className="connection-cover" src="https://covers.openlibrary.org/b/isbn/9780547928227-M.jpg" alt="" loading="lazy" />
+              <span className="connection-content"><span className="connection-top"><strong>Lucas Matos</strong><span>ontem</span></span><span className="connection-book">O Hobbit</span><span className="connection-message">Conversa disponível em breve</span></span>
+            </div>
           </section>
         )}
 
@@ -329,13 +318,17 @@ function App() {
             <div className="profile-section">
               <div className="profile-section-title">
                 <h2>Quero ler</h2>
-                <button>Ver tudo</button>
+                <button onClick={() => showFeedback('Em breve, você poderá ver toda a lista.')}>Ver tudo</button>
               </div>
               <div className="wish-grid">
-                {['Neuromancer', 'Cosmos', 'O Problema dos Três Corpos'].map((title) => (
-                  <div className="wish-card" key={title}>
-                    <div>{title.charAt(0)}</div>
-                    <span>{title}</span>
+                {[
+                  { title: 'Neuromancer', isbn: '9780441569595' },
+                  { title: 'Cosmos', isbn: '9780345539434' },
+                  { title: 'O Problema dos Três Corpos', isbn: '9780765382030' },
+                ].map((book) => (
+                  <div className="wish-card" key={book.title}>
+                    <div className="wish-cover"><span aria-hidden="true">{book.title.charAt(0)}</span><img src={'https://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'} alt={'Capa de ' + book.title} loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none' }} /></div>
+                    <span>{book.title}</span>
                   </div>
                 ))}
               </div>
@@ -346,7 +339,7 @@ function App() {
                 <h2>Sobre a comunidade</h2>
               </div>
               <div className="community-card">
-                <span>◌</span>
+                <img className="community-icon" src="/assets/loomi-conexoes.webp" alt="" />
                 <div>
                   <strong>IFCE · Limoeiro do Norte</strong>
                   <p>Compartilhe livros com pessoas que circulam pelo mesmo campus.</p>
@@ -364,7 +357,7 @@ function App() {
             className={tab === item.id ? 'active' : ''}
             onClick={() => setTab(item.id)}
           >
-            <span>{item.icon}</span>
+            <span className={"nav-art nav-art--" + item.id} aria-hidden="true" />
             {item.label}
           </button>
         ))}
@@ -374,8 +367,8 @@ function App() {
         <div className="modal-backdrop" onMouseDown={() => setShowAddBook(false)}>
           <div className="modal" onMouseDown={(event) => event.stopPropagation()}>
             <button className="modal-close" onClick={() => setShowAddBook(false)}>×</button>
-            <p className="eyebrow">NOVA ADIÇÃO</p>
-            <h2>Coloque um livro na sua estante</h2>
+            <p className="eyebrow">ADICIONAR LIVRO</p>
+            <h2>Adicionar à estante</h2>
             <form onSubmit={addBook} className="book-form">
               <label>
                 Título
@@ -404,7 +397,7 @@ function App() {
           <div className="chat-book-context">
             <span>📕</span>
             <div><strong>Duna</strong><small>até 30 dias</small></div>
-            <button onClick={() => showFeedback('Fluxo de empréstimo entra na próxima fase')}>Combinar retirada</button>
+            <button onClick={() => showFeedback('Em breve, você poderá combinar a retirada por aqui.')}>Combinar retirada</button>
           </div>
           <div className="messages">
             {messages.map((message) => (
