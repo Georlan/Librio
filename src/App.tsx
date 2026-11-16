@@ -184,7 +184,7 @@ function App() {
           <div className="campus">IFCE · Limoeiro do Norte</div>
         </div>
         <button className="avatar-button" aria-label="Abrir perfil" onClick={() => setTab('profile')}>
-          G
+          C
         </button>
       </header>
 
@@ -301,10 +301,10 @@ function App() {
         {tab === 'profile' && (
           <section className="profile-screen">
             <div className="profile-hero">
-              <div className="profile-avatar">G</div>
+              <div className="profile-avatar">C</div>
               <div>
                 <p className="eyebrow">MEU PERFIL</p>
-                <h1>Georlan</h1>
+                <h1>Clara Liz</h1>
                 <p>IFCE · Limoeiro do Norte</p>
               </div>
             </div>
