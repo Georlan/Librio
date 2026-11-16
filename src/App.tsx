@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import SwipeDeck, { Book } from './components/SwipeDeck'
-import { useLibrioArtCssVariables } from './art/librioArt'
 
 type Tab = 'discover' | 'library' | 'matches' | 'profile'
 
@@ -105,7 +104,6 @@ const navItems: Array<{ id: Tab; icon: string; label: string }> = [
 ]
 
 function App() {
-  useLibrioArtCssVariables()
   const [tab, setTab] = useState<Tab>('discover')
   const [likedIds, setLikedIds] = useState<number[]>([])
   const [shelf, setShelf] = useState<ShelfBook[]>(initialShelf)
@@ -181,7 +179,7 @@ function App() {
     <div className="app">
       <header className="topbar">
         <div>
-          <div className="brand">Librio<span>.</span></div>
+          <div className="brand">Loomi<span>.</span></div>
           <div className="campus">IFCE · Limoeiro do Norte</div>
         </div>
         <button className="avatar-button" aria-label="Abrir perfil" onClick={() => setTab('profile')}>

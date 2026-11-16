@@ -1,9 +1,9 @@
 {
-  "name": "Librio",
-  "short_name": "Librio",
+  "name": "Loomi",
+  "short_name": "Loomi",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#efe5d4",
-  "theme_color": "#28382c",
+  "background_color": "#fafafd",
+  "theme_color": "#08083f",
   "description": "Descubra livros disponíveis na sua comunidade."
 }

@@ -2236,3 +2236,62 @@ body {
     --swipe-action-size: 54px;
   }
 }
+
+/* Loomi identity: quiet surfaces, navy type and a single yellow accent. */
+:root { --ink:#08083f; --ink-soft:#45465f; --muted:#686a7d; --paper:#fff; --paper-light:#fff; --paper-deep:#f1f2f7; --green:#08083f; --green-dark:#08083f; --green-wash:#e9b900; --red:#a43b4c; --blue:#08083f; --line:#e5e6ee; --shadow:0 8px 28px #08083f0a; color:var(--ink); background:#fafafd; }
+html, body { background:#fafafd; }
+body::before,.app::before,.app::after,.brand::after,.filter-button::after,.paper-tape,.swipe-art::before,.swipe-card::after,.library-item::before,.match-card::before,.interest-banner::after,.library-screen::after,.matches-screen::after,.profile-screen::after { display:none; }
+.topbar,.bottom-nav { background:#fff; background-image:none; border:1px solid var(--line); box-shadow:none; }
+.topbar { border-width:0 0 1px; }
+.brand { font:800 30px/1.1 system-ui,sans-serif; letter-spacing:-1.5px; color:var(--ink); }
+.brand span { color:#e9b900; }
+.campus { font:500 11px/1.5 system-ui,sans-serif; margin-top:5px; letter-spacing:0; }
+.content { width:min(100% - 32px,960px); padding-top:28px; }
+.app h1,.app h2,.app h3,.app strong,.app button,.app input,.app p,.app span { font-family:inherit; }
+.section-heading h1,.swipe-titlebar h1 { font-size:clamp(26px,5vw,36px); line-height:1.15; letter-spacing:-1px; max-width:400px; }
+.eyebrow { font:600 10px/1.5 system-ui,sans-serif; letter-spacing:.1em; color:var(--muted); }
+.avatar-button,.owner-avatar,.match-avatar,.profile-avatar { border-radius:50%; background:#08083f; color:white; box-shadow:none; transform:none; }
+.round-button { border-radius:50%; background:#fff; border:1px solid var(--line); box-shadow:none; transform:none; }
+.round-button.accent { background:#e9b900; color:#08083f; }
+.discovery-tabs { background:#f0f1f6; border:0; border-radius:12px; padding:4px; margin:20px 0; }
+.discovery-tabs button { min-height:40px; font-size:12px; transform:none; }
+.discovery-tabs button.active { background:#08083f!important; color:#fff; border-radius:9px; }
+.bottom-nav button.active::before { display:none; }
+.bottom-nav button.active { background:#fff5c9; color:#08083f; border-radius:12px; }
+.bottom-nav button { font-size:11px; }
+.swipe-card { background:#fff; border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); }
+.swipe-art { background:#f1f2f7; }
+.swipe-art-blur { display:none; }
+.swipe-cover { filter:drop-shadow(0 8px 12px #08083f18); }
+.swipe-campus-pill { background:#fff!important; color:#08083f; border:1px solid var(--line); border-radius:20px; min-height:30px; padding:7px 11px; transform:none; font-size:10px; }
+.swipe-book-body { background:#fff; }
+.swipe-book-main h2 { line-height:1.15; }
+.swipe-days { background:#fff5c9; border-radius:10px; box-shadow:none; transform:none; }
+.swipe-days span { font-size:9px; }
+.swipe-author { font-size:13px; }
+.swipe-tags span,.match-badge,.availability { background:#f0f1f6; color:#45465f; border-radius:20px; font-size:10px; transform:none!important; }
+.swipe-owner-row { border-top:1px solid var(--line); }
+.swipe-owner-copy strong { font-size:12px; }
+.swipe-owner-copy span,.swipe-note,.swipe-rating span { font-size:10px; }
+.swipe-note { color:var(--muted); font-style:normal; }
+.swipe-actions { margin-top:18px; }
+.swipe-action { background:#fff!important; border:1px solid var(--line)!important; border-radius:50%!important; transform:none; color:#08083f; }
+.swipe-action--like { background:#e9b900!important; border-color:#e9b900!important; }
+.swipe-action > span { font-size:28px; line-height:1; }
+.swipe-action-caption { display:none; }
+.swipe-action-item strong { font-size:10px; letter-spacing:0; }
+.stat-card,.library-item,.profile-score,.community-card,.modal,.chat-book-context,.message,.match-card { background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:none; transform:none!important; }
+.stat-card span { font-size:10px; text-transform:none; }
+.library-copy strong { font-size:14px; }
+.library-copy span { font-size:12px; }
+.availability.is-available { background:#fff5c9; color:#08083f; }
+.interest-banner { background:#08083f; color:#fff; border-radius:16px; box-shadow:none; }
+.interest-banner button,.submit-button,.message-form button { background:#e9b900; color:#08083f; border:0; border-radius:12px; }
+.mini-cover,.wish-card > div { background:#e9b900!important; color:#08083f; border-radius:6px; box-shadow:none; transform:none; }
+.message.mine { background:#08083f; color:#fff; }
+.chat-panel,.chat-header { background:#fafafd; }
+.book-form input,.message-form input { background:#fff; color:#08083f; border:1px solid var(--line); border-radius:10px; }
+.toast { background:#08083f; color:white; border:0; border-radius:12px; font-size:13px; }
+button:focus-visible,input:focus-visible { outline:3px solid #9a7900; outline-offset:3px; }
+@media (max-width:430px) { .content { padding-top:20px; } .swipe-actions { margin-top:18px; } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }

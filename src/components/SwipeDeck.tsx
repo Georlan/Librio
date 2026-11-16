@@ -5,7 +5,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import { ArtAsset } from '../art/librioArt'
 
 export type Book = {
   id: number
@@ -380,7 +379,7 @@ export default function SwipeDeck({
             title="Desfazer"
             data-testid="action-rewind"
           >
-            <ArtAsset slot="actions.rewind" decorative />
+            <span aria-hidden="true">↶</span>
           </button>
           <strong>VOLTAR</strong>
           <span className="swipe-action-caption">talvez depois</span>
@@ -394,7 +393,7 @@ export default function SwipeDeck({
             aria-label="Passar este livro"
             data-testid="action-pass"
           >
-            <ArtAsset slot="actions.pass" decorative />
+            <span aria-hidden="true">×</span>
           </button>
           <strong>PASSAR</strong>
           <span className="swipe-action-caption">não é agora</span>
@@ -408,7 +407,7 @@ export default function SwipeDeck({
             aria-label="Quero ler este livro"
             data-testid="action-like"
           >
-            <ArtAsset slot="actions.like" decorative />
+            <span aria-hidden="true">♡</span>
           </button>
           <strong>QUERO LER</strong>
           <span className="swipe-action-caption">essa sim!</span>
