@@ -5,7 +5,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import { ArtAsset } from '../art/librioArt'
 
 export type Book = {
   id: number
@@ -291,9 +290,10 @@ export default function SwipeDeck({
       >
         {visibleBooks.length === 0 && exitingCards.length === 0 && (
           <div className="deck-empty" data-testid="deck-empty">
+            <img className="deck-empty-mascot" src="/assets/loomi-livro.png" alt="" />
             <p className="eyebrow">FIM DA PILHA</p>
-            <h3>Você viu todos os livros disponíveis!</h3>
-            <p>Novos títulos chegam frequentemente da sua comunidade acadêmica.</p>
+            <h3>Você viu todos os livros.</h3>
+            <p>Volte mais tarde para encontrar novos títulos.</p>
           </div>
         )}
 
@@ -380,10 +380,10 @@ export default function SwipeDeck({
             title="Desfazer"
             data-testid="action-rewind"
           >
-            <ArtAsset slot="actions.rewind" decorative />
+            <span className="action-art action-art--rewind" aria-hidden="true" />
           </button>
           <strong>VOLTAR</strong>
-          <span className="swipe-action-caption">talvez depois</span>
+          
         </div>
 
         <div className="swipe-action-item swipe-action-item--pass">
@@ -394,10 +394,10 @@ export default function SwipeDeck({
             aria-label="Passar este livro"
             data-testid="action-pass"
           >
-            <ArtAsset slot="actions.pass" decorative />
+            <span className="action-art action-art--pass" aria-hidden="true" />
           </button>
           <strong>PASSAR</strong>
-          <span className="swipe-action-caption">não é agora</span>
+          
         </div>
 
         <div className="swipe-action-item swipe-action-item--like">
@@ -408,10 +408,10 @@ export default function SwipeDeck({
             aria-label="Quero ler este livro"
             data-testid="action-like"
           >
-            <ArtAsset slot="actions.like" decorative />
+            <span className="action-art action-art--like" aria-hidden="true" />
           </button>
           <strong>QUERO LER</strong>
-          <span className="swipe-action-caption">essa sim!</span>
+          
         </div>
       </div>
     </div>
