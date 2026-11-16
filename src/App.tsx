@@ -179,7 +179,7 @@ function App() {
     <div className="app">
       <header className="topbar">
         <div>
-          <div className="brand">Loomi<span>.</span></div>
+          <div className="brand"><img src="/assets/loomi-logo.png" alt="Loomi" /></div>
           <div className="campus">IFCE · Limoeiro do Norte</div>
         </div>
         <button className="avatar-button" aria-label="Abrir perfil" onClick={() => setTab('profile')}>

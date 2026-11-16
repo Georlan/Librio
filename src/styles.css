@@ -2295,3 +2295,5 @@ body::before,.app::before,.app::after,.brand::after,.filter-button::after,.paper
 button:focus-visible,input:focus-visible { outline:3px solid #9a7900; outline-offset:3px; }
 @media (max-width:430px) { .content { padding-top:20px; } .swipe-actions { margin-top:18px; } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+
+.brand img { display:block; width:120px; height:46px; object-fit:contain; object-position:left center; }
