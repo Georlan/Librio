@@ -345,13 +345,13 @@ export default function SwipeDeck({
                       className="swipe-stamp swipe-stamp--like"
                       style={{ opacity: likeOpacity }}
                     >
-                      QUERO LER
+                      Quero ler
                     </div>
                     <div
                       className="swipe-stamp swipe-stamp--pass"
                       style={{ opacity: passOpacity }}
                     >
-                      PASSAR
+                      Passar
                     </div>
                   </>
                 )}
@@ -382,7 +382,7 @@ export default function SwipeDeck({
           >
             <span className="action-art action-art--rewind" aria-hidden="true" />
           </button>
-          <strong>VOLTAR</strong>
+          <strong>Voltar</strong>
           
         </div>
 
@@ -396,7 +396,7 @@ export default function SwipeDeck({
           >
             <span className="action-art action-art--pass" aria-hidden="true" />
           </button>
-          <strong>PASSAR</strong>
+          <strong>Passar</strong>
           
         </div>
 
@@ -410,7 +410,7 @@ export default function SwipeDeck({
           >
             <span className="action-art action-art--like" aria-hidden="true" />
           </button>
-          <strong>QUERO LER</strong>
+          <strong>Quero ler</strong>
           
         </div>
       </div>
@@ -463,13 +463,13 @@ function ExitingCardItem({
         className="swipe-stamp swipe-stamp--like"
         style={{ opacity: item.direction === 1 ? 1 : 0 }}
       >
-        QUERO LER
+        Quero ler
       </div>
       <div
         className="swipe-stamp swipe-stamp--pass"
         style={{ opacity: item.direction === -1 ? 1 : 0 }}
       >
-        PASSAR
+        Passar
       </div>
       <BookCardContent book={item.book} muted />
     </article>
