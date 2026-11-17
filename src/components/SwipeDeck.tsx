@@ -82,6 +82,17 @@ export default function SwipeDeck({
   const currentBook = books[activeIndex]
   const visibleBooks = books.slice(activeIndex, activeIndex + 2)
 
+  useEffect(() => {
+    // Aquece apenas as próximas capas, sem baixar um catálogo inteiro.
+    const upcoming = books.slice(activeIndex + 1, activeIndex + 4)
+    const images = upcoming.map((book) => {
+      const image = new Image()
+      image.src = book.cover
+      return image
+    })
+    return () => { images.length = 0 }
+  }, [books, activeIndex])
+
   const cancelScheduledDrag = useCallback(() => {
     if (dragFrameRef.current !== null) {
       cancelAnimationFrame(dragFrameRef.current)
@@ -492,7 +503,7 @@ function BookCardContent({ book, muted = false }: { book: Book; muted?: boolean 
           alt={muted ? '' : `Capa de ${book.title}`}
           draggable={false}
           decoding="async"
-          loading={muted ? 'lazy' : 'eager'}
+          loading="eager"
           fetchPriority={muted ? 'low' : 'high'}
         />
         <div className="swipe-campus-pill">no seu campus</div>
