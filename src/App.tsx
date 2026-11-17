@@ -173,12 +173,62 @@ const discoverBooks: Book[] = [
     note: "Exemplar de demonstração.",
     tags: ["Clássico", "Fábula"],
   },
+  {
+    id: 12, title: "Harry Potter e a Pedra Filosofal", author: "J. K. Rowling",
+    owner: 'Pessoa leitora', course: 'Comunidade acadêmica', campus: 'IFCE · Limoeiro do Norte',
+    rating: 5, loans: 0, maxDays: 30, cover: '/assets/livro-harry.webp',
+    note: 'Exemplar de demonstração.', tags: ["Fantasia", "Aventura"],
+  },
+  {
+    id: 13, title: "Dom Casmurro", author: "Machado de Assis",
+    owner: 'Pessoa leitora', course: 'Comunidade acadêmica', campus: 'IFCE · Limoeiro do Norte',
+    rating: 5, loans: 0, maxDays: 30, cover: '/assets/livro-dom-casmurro.webp',
+    note: 'Exemplar de demonstração.', tags: ["Literatura brasileira", "Clássico"],
+  },
+  {
+    id: 14, title: "O Alquimista", author: "Paulo Coelho",
+    owner: 'Pessoa leitora', course: 'Comunidade acadêmica', campus: 'IFCE · Limoeiro do Norte',
+    rating: 5, loans: 0, maxDays: 30, cover: '/assets/livro-alquimista.webp',
+    note: 'Exemplar de demonstração.', tags: ["Ficção", "Aventura"],
+  },
+  {
+    id: 15, title: "Orgulho e Preconceito", author: "Jane Austen",
+    owner: 'Pessoa leitora', course: 'Comunidade acadêmica', campus: 'IFCE · Limoeiro do Norte',
+    rating: 5, loans: 0, maxDays: 30, cover: '/assets/livro-orgulho.webp',
+    note: 'Exemplar de demonstração.', tags: ["Romance", "Clássico"],
+  },
+  {
+    id: 16, title: "Percy Jackson e o Ladrão de Raios", author: "Rick Riordan",
+    owner: 'Pessoa leitora', course: 'Comunidade acadêmica', campus: 'IFCE · Limoeiro do Norte',
+    rating: 5, loans: 0, maxDays: 30, cover: '/assets/livro-percy.webp',
+    note: 'Exemplar de demonstração.', tags: ["Fantasia", "Aventura"],
+  },
+  {
+    id: 17, title: "A Menina que Roubava Livros", author: "Markus Zusak",
+    owner: 'Pessoa leitora', course: 'Comunidade acadêmica', campus: 'IFCE · Limoeiro do Norte',
+    rating: 5, loans: 0, maxDays: 30, cover: '/assets/livro-menina-roubava.webp',
+    note: 'Exemplar de demonstração.', tags: ["Ficção", "Drama"],
+  },
+  {
+    id: 18, title: "Mulherzinhas", author: "Louisa May Alcott",
+    owner: 'Pessoa leitora', course: 'Comunidade acadêmica', campus: 'IFCE · Limoeiro do Norte',
+    rating: 5, loans: 0, maxDays: 30, cover: '/assets/livro-pequenas-mulheres.webp',
+    note: 'Exemplar de demonstração.', tags: ["Clássico", "Drama"],
+  },
 ]
 
 const initialShelf: ShelfBook[] = [
-  { id: 1, title: 'Fundação', author: 'Isaac Asimov', available: true, cover: 'https://covers.openlibrary.org/b/isbn/9780553293357-M.jpg' },
-  { id: 2, title: 'Sapiens', author: 'Yuval Noah Harari', available: false, cover: 'https://covers.openlibrary.org/b/isbn/9780062316097-M.jpg' },
-  { id: 3, title: 'O Guia do Mochileiro das Galáxias', author: 'Douglas Adams', available: true, cover: 'https://covers.openlibrary.org/b/isbn/9780345391803-M.jpg' },
+  { id: 1, title: 'Fundação', author: 'Isaac Asimov', available: true, cover: '/assets/livro-fundacao.webp' },
+  { id: 2, title: 'Sapiens', author: 'Yuval Noah Harari', available: false, cover: '/assets/livro-sapiens.webp' },
+  { id: 3, title: 'O Guia do Mochileiro das Galáxias', author: 'Douglas Adams', available: true, cover: '/assets/livro-mochileiro.webp' },
+  ...discoverBooks.filter((book) => [7, 12, 13, 17].includes(book.id)).map(({ id, title, author, cover }) => ({ id, title, author, cover, available: true })),
+]
+
+const initialWishBooks = [
+  { id: 4, title: 'Neuromancer', cover: '/assets/capa-catalogo-4.webp' },
+  { id: -1, title: 'Cosmos', cover: '/assets/livro-cosmos.webp' },
+  { id: -2, title: 'O Problema dos Três Corpos', cover: '/assets/livro-tres-corpos.webp' },
+  ...discoverBooks.filter((book) => [8, 14, 18].includes(book.id)),
 ]
 
 const navItems: Array<{ id: Tab; icon: string; label: string }> = [
@@ -191,6 +241,7 @@ const navItems: Array<{ id: Tab; icon: string; label: string }> = [
 function App() {
   const [tab, setTab] = useState<Tab>('discover')
   const [likedIds, setLikedIds] = useState<number[]>([])
+  const [showAllWishBooks, setShowAllWishBooks] = useState(false)
   const [shelf, setShelf] = useState<ShelfBook[]>(initialShelf)
   const [showAddBook, setShowAddBook] = useState(false)
   const [showChat, setShowChat] = useState(false)
@@ -204,6 +255,22 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [tab])
+
+  const wishBooks = useMemo(() => {
+    const likedBooks = likedIds.map((id) => discoverBooks.find((book) => book.id === id)).filter((book): book is Book => Boolean(book))
+    return [...likedBooks, ...initialWishBooks.filter((book) => !likedIds.includes(book.id))]
+  }, [likedIds])
+
+  useEffect(() => {
+    const covers = [...initialShelf.slice(0, 3), ...initialWishBooks.slice(0, 3)]
+    const images = covers.filter((book) => book.cover?.startsWith('/')).map((book) => {
+      const image = new Image()
+      image.fetchPriority = 'low'
+      image.src = book.cover!
+      return image
+    })
+    return () => { images.length = 0 }
+  }, [])
 
   const availableCount = useMemo(
     () => shelf.filter((book) => book.available).length,
@@ -371,12 +438,12 @@ function App() {
 
             <div className="connections-heading"><h2>Conversas</h2><span>2 conexões</span></div>
             <button type="button" className="connection-row" onClick={() => setShowChat(true)} aria-label="Abrir conversa com Marina Alves sobre Duna">
-              <img className="connection-cover" src="https://covers.openlibrary.org/b/isbn/9780441172719-M.jpg" alt="" loading="lazy" />
+              <img className="connection-cover" src="/assets/capa-catalogo-1.webp" alt="" loading="lazy" />
               <span className="connection-content"><span className="connection-top"><strong>Marina Alves</strong><time>13:43</time></span><span className="connection-book">Duna</span><span className="connection-message">Posso levar amanhã. Estarei perto da biblioteca...</span></span>
               <span className="connection-arrow" aria-hidden="true">›</span>
             </button>
             <div className="connection-row connection-row--inactive">
-              <img className="connection-cover" src="https://covers.openlibrary.org/b/isbn/9780547928227-M.jpg" alt="" loading="lazy" />
+              <img className="connection-cover" src="/assets/capa-catalogo-2.webp" alt="" loading="lazy" />
               <span className="connection-content"><span className="connection-top"><strong>Lucas Matos</strong><span>ontem</span></span><span className="connection-book">O Hobbit</span><span className="connection-message">Conversa disponível em breve</span></span>
             </div>
           </section>
@@ -396,22 +463,18 @@ function App() {
             <div className="profile-score">
               <div><strong>4.9</strong><span>reputação</span></div>
               <div><strong>14</strong><span>empréstimos</span></div>
-              <div><strong>8</strong><span>quero ler</span></div>
+              <div><strong>{wishBooks.length}</strong><span>quero ler</span></div>
             </div>
 
             <div className="profile-section">
               <div className="profile-section-title">
                 <h2>Quero ler</h2>
-                <button onClick={() => showFeedback('Em breve, você poderá ver toda a lista.')}>Ver tudo</button>
+                <button onClick={() => setShowAllWishBooks((show) => !show)}>{showAllWishBooks ? 'Ver menos' : 'Ver tudo'}</button>
               </div>
               <div className="wish-grid">
-                {[
-                  { title: 'Neuromancer', isbn: '9780441569595' },
-                  { title: 'Cosmos', isbn: '9780345539434' },
-                  { title: 'O Problema dos Três Corpos', isbn: '9780765382030' },
-                ].map((book) => (
-                  <div className="wish-card" key={book.title}>
-                    <div className="wish-cover"><span aria-hidden="true">{book.title.charAt(0)}</span><img src={'https://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'} alt={'Capa de ' + book.title} loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none' }} /></div>
+                {(showAllWishBooks ? wishBooks : wishBooks.slice(0, 3)).map((book) => (
+                  <div className="wish-card" key={book.id}>
+                    <div className="wish-cover"><span aria-hidden="true">{book.title.charAt(0)}</span><img src={book.cover} alt={'Capa de ' + book.title} loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none' }} /></div>
                     <span>{book.title}</span>
                   </div>
                 ))}
