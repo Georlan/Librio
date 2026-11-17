@@ -2527,3 +2527,12 @@ button.connection-row:active { transform:scale(.985); }
 .swipe-stamp--like { color: #08083f; background: #f8d74a; transform: none; }
 .swipe-stamp--pass { color: #fff; background: #08083f; transform: none; }
 @media (max-width: 600px) { .swipe-action-item strong { font-size: 11px; } }
+
+/* Capas preservam a proporção em qualquer largura. */
+@media (min-width: 601px) {
+  .swipe-art { display: flex; align-items: center; justify-content: center; }
+  .swipe-cover { width: auto; height: 100%; max-width: 100%; padding: 10px 16px; object-fit: contain; }
+}
+@media (max-width: 600px) {
+  .swipe-cover { max-width: 100%; max-height: min(218px, 100%); object-fit: contain; }
+}
